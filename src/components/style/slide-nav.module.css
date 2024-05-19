@@ -1,0 +1,54 @@
+.sliderContainer {
+  border-right: 1px solid var(--mantine-color-gray-5);
+  display: flex;
+  flex-direction: column;
+  /* overflow-x: hidden; */
+  transition: all 0.4s;
+  height: 100vh;
+  position: relative;
+}
+
+.link {
+  text-decoration: none;
+  margin-bottom: 20px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  color: light-dark(black, white);
+  position: relative;
+  margin-inline: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.2s;
+  position: relative;
+
+  &:hover {
+    box-shadow: light-dark(
+      var(--mantine-color-red-1) 0px 0px 10px,
+      var(--mantine-color-red-1) 0px 0px 2px
+    );
+    /* background-color: var(--mantine-color-gray-1); */
+  }
+}
+
+.activeLink {
+  color: white;
+  background-color: light-dark(
+    var(--mantine-color-red-8),
+    var(--mantine-color-red-8)
+  );
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+}
+
+.slideButton{
+  position: absolute;
+ background-color: transparent;
+ border: none;
+ right: -20px;
+ top: 5px;
+ z-index: 100;
+}

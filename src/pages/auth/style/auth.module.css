@@ -1,0 +1,5 @@
+.layout {
+  border: 2px solid light-dark(var(--mantine-color-gray-2),var(--mantine-color-gray-8));
+  border-radius: var(--mantine-radius-lg);
+  padding: 20px;
+}

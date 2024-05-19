@@ -1,0 +1,13 @@
+black gray - #3b3b3c
+milk - #dbe2e3
+white gray - #848386
+sky blue - #5155c9
+cyan - #11c9f1
+
+red - #e60023;
+red:hover - #b60000;
+red:active - #a3081a
+
+
+
+https://cdn.dribbble.com/userupload/11335441/file/original-27aaaf544ff61806b887cece00503e33.png?resize=1200x720
