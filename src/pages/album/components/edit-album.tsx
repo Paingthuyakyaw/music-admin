@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Box,
   Button,
   Drawer,
@@ -10,11 +11,11 @@ import {
 } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { IconImageInPicture } from "@tabler/icons-react";
+import { IconEdit, IconImageInPicture } from "@tabler/icons-react";
 import { useArtist } from "../../../store/server/artist/queries";
-import { useCreateAlbum } from "../../../store/server/album/mutation";
+import { useEditAlbum } from "../../../store/server/album/mutation";
 
-const CreateAlbum = () => {
+const EditAlbum = ({ id }: { id: number }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   // form validation
@@ -31,7 +32,7 @@ const CreateAlbum = () => {
     },
   });
 
-  const createAlbum = useCreateAlbum();
+  const editAlbum = useEditAlbum(id);
 
   // artis
   const { data: artist } = useArtist({ page: "1", size: "999", search: "" });
@@ -46,12 +47,12 @@ const CreateAlbum = () => {
   return (
     <>
       <Drawer position="right" opened={opened} onClose={close}>
-        <Title order={3}>Create Album</Title>
+        <Title order={3}>Edit Album</Title>
         {/* create form */}
         <Box mt={10}>
           <form
             onSubmit={form.onSubmit((value) =>
-              createAlbum.mutate(value, {
+              editAlbum.mutate(value, {
                 onSuccess: () => {
                   close();
                   form.reset();
@@ -79,23 +80,22 @@ const CreateAlbum = () => {
               />
 
               <Button bg={"var(--mantine-color-music-7)"} type="submit">
-                Create Album
+                Edit Album
               </Button>
             </Flex>
           </form>
         </Box>
       </Drawer>
 
-      <Button
-        // loading={}
+      <ActionIcon
+        loading={editAlbum.isPending}
         onClick={open}
-        w={130}
-        bg={"var(--mantine-color-music-7)"}
+        bg={"var(--mantine-color-blue-7)"}
       >
-        Create Album
-      </Button>
+        <IconEdit size={20} />
+      </ActionIcon>
     </>
   );
 };
 
-export default CreateAlbum;
+export default EditAlbum;

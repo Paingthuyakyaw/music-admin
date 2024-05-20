@@ -1,14 +1,11 @@
-import { ActionIcon, Box, Flex } from "@mantine/core";
+import { Box, Flex } from "@mantine/core";
 import NavbarLayout from "../../components/NavbarLayout";
 import SearchInput from "../../components/search-input";
-import { useDebouncedState, useDisclosure } from "@mantine/hooks";
+import { useDebouncedState } from "@mantine/hooks";
 import { useArtist } from "../../store/server/artist/queries";
 import { DataTable } from "mantine-datatable";
 import CreateArtist from "./components/create-artist";
-import { IconTrash } from "@tabler/icons-react";
-import { useState } from "react";
-import ConfirmData from "../../components/confirm-button";
-import { useDeleteArtist } from "../../store/server/artist/mutation";
+import EditArtist from "./components/edit-artist";
 
 const Artist = () => {
   const [value, setValue] = useDebouncedState("", 500);
@@ -18,12 +15,6 @@ const Artist = () => {
     size: "10",
     search: value,
   });
-
-  const [deleteId, setDeleteId] = useState<number | null>(null);
-
-  const [opened, { open, close }] = useDisclosure();
-
-  const deleteArtist = useDeleteArtist();
 
   return (
     <>
@@ -53,21 +44,11 @@ const Artist = () => {
             {
               accessor: "id",
               title: "",
-              render: (data) => {
+              render: ({ id }) => {
                 return (
                   <Box>
                     <Flex justify={"center"} gap={10}>
-                      <ActionIcon
-                        fz={12}
-                        onClick={() => {
-                          setDeleteId(data.id);
-                          open();
-                        }}
-                        variant="light"
-                        color="var(--mantine-color-music-8)"
-                      >
-                        <IconTrash size={20} />
-                      </ActionIcon>
+                      <EditArtist id={id} />
                     </Flex>
                   </Box>
                 );
@@ -85,24 +66,6 @@ const Artist = () => {
           borderRadius={"md"}
         />
       </Box>
-
-      {deleteId && (
-        <ConfirmData
-          opened={opened}
-          onConfirm={() => {
-            deleteArtist.mutate(deleteId, {
-              onSuccess: () => close(),
-            });
-          }}
-          close={close}
-          button={{
-            title: "Are you sure?",
-            message: "If you delete , all artist's album may be lost?",
-            btn: "Delete",
-          }}
-          loading={deleteArtist.isPending}
-        />
-      )}
     </>
   );
 };

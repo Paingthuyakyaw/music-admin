@@ -1,13 +1,12 @@
-import { ActionIcon, Box, Flex, Text } from "@mantine/core";
+import { Box, Flex, Text } from "@mantine/core";
 import NavbarLayout from "../../components/NavbarLayout";
 import SearchInput from "../../components/search-input";
-import { useDebouncedState, useDisclosure } from "@mantine/hooks";
+import { useDebouncedState } from "@mantine/hooks";
 import { DataTable } from "mantine-datatable";
 import { useAlbum } from "../../store/server/album/queries";
 import { useState } from "react";
-import { IconTrash } from "@tabler/icons-react";
 import CreateAlbum from "./components/create-album";
-import ConfirmData from "../../components/confirm-button";
+import EditAlbum from "./components/edit-album";
 
 const Album = () => {
   const [value, setValue] = useDebouncedState("", 500);
@@ -19,10 +18,6 @@ const Album = () => {
     size: "10",
     search: value,
   });
-
-  const [deleteId, setDeleteId] = useState<number | null>(null);
-
-  const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
@@ -66,17 +61,7 @@ const Album = () => {
                 return (
                   <Box>
                     <Flex justify={"center"} gap={10}>
-                      <ActionIcon
-                        fz={12}
-                        onClick={() => {
-                          setDeleteId(id);
-                          open();
-                        }}
-                        variant="light"
-                        color="var(--mantine-color-music-8)"
-                      >
-                        <IconTrash size={20} />
-                      </ActionIcon>
+                      <EditAlbum id={id} />
                     </Flex>
                   </Box>
                 );
@@ -96,20 +81,6 @@ const Album = () => {
           borderRadius={"md"}
         />
       </Box>
-
-      {deleteId && (
-        <ConfirmData
-          opened={opened}
-          onConfirm={() => {}}
-          close={close}
-          button={{
-            title: "Are you sure?",
-            message: "Are you sure you deleted the music?",
-            btn: "Delete",
-          }}
-          loading={true}
-        />
-      )}
     </>
   );
 };
