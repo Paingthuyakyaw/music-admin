@@ -1,20 +1,30 @@
-import { Box, Flex } from "@mantine/core";
+import { Box, Flex, Image, Title } from "@mantine/core";
 import { navLink } from "../assets/slide-navLink";
 import { Link, useLocation } from "react-router-dom";
 import classes from "./style/slide-nav.module.css";
 import { useState } from "react";
 import { IconCircleArrowRight } from "@tabler/icons-react";
+import logo from "../assets/logo.jpeg";
 
 const SliderNav = () => {
   const [width, setWidth] = useState(false);
-  const { pathname } = useLocation();
+  const { pathname: path } = useLocation();
 
-  console.log(pathname);
+  const pathname = path === "/" ? "/music" : path;
 
   return (
     <>
       <Box className={classes.sliderContainer} w={width ? 70 : 250}>
-        <Box my={15} ml={20} >Logo</Box>
+        {width ? (
+          <Flex align={"center"} my={15} ml={20}>
+            <Image src={logo} w={40} h={40} />
+          </Flex>
+        ) : (
+          <Flex gap={10} align={"center"} my={15} ml={20}>
+            <Image src={logo} w={60} h={60} />
+            <Title order={4}>TuneMix</Title>
+          </Flex>
+        )}
         {navLink.map((nav) => {
           return (
             <Link

@@ -11,7 +11,7 @@ const Router = () => {
         {
           index: true,
           lazy: async () => ({
-            Component: (await import("./pages/dashboard")).default,
+            Component: (await import("./pages/music")).default,
           }),
         },
         {
