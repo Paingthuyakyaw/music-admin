@@ -17,6 +17,17 @@ const createAlbum = async (payload: AlbumProp) => {
   return data;
 };
 
+const editAlbum = async (id: number, payload: AlbumProp) => {
+  const data = await axios.post(
+    `album/${id}`,
+    transformFormData(payload, true),
+    {
+      headers: authJsonHeader(),
+    }
+  );
+  return data;
+};
+
 export const useCreateAlbum = () => {
   const query = useQueryClient();
   return useMutation({
@@ -34,6 +45,31 @@ export const useCreateAlbum = () => {
 
       notifications.show({
         title: "Album create fail",
+        message: "Please try again!",
+        icon: <IconX />,
+        color: "red",
+      });
+    },
+  });
+};
+
+export const useEditAlbum = (id: number) => {
+  const query = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: AlbumProp) => editAlbum(id, payload),
+    onSuccess: () => {
+      query.invalidateQueries({ queryKey: ["album"] });
+      notifications.show({
+        message: "Album edit Successfully",
+        icon: <IconCheck />,
+        color: "green",
+      });
+    },
+    onError: (data) => {
+      console.log({ err: data });
+
+      notifications.show({
+        title: "Album edit fail",
         message: "Please try again!",
         icon: <IconX />,
         color: "red",

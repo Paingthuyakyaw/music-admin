@@ -74,3 +74,39 @@ export const useDeleteArtist = () => {
     },
   });
 };
+
+const editArtist = async (id: number, payload: musicProp) => {
+  const data = await axios.post(
+    `artist/${id}`,
+    transformFormData(payload, true),
+    {
+      headers: authJsonHeader(),
+    }
+  );
+  return data;
+};
+
+export const useEditArtist = (id: number) => {
+  const query = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: musicProp) => editArtist(id, payload),
+    onSuccess: () => {
+      query.invalidateQueries({ queryKey: ["artist"] });
+      notifications.show({
+        message: "Artist edit Successfully",
+        icon: <IconCheck />,
+        color: "green",
+      });
+    },
+    onError: (data) => {
+      console.log({ err: data });
+
+      notifications.show({
+        title: "Artist edit fail",
+        message: "Please try again!",
+        icon: <IconX />,
+        color: "red",
+      });
+    },
+  });
+};

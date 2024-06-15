@@ -8,6 +8,7 @@ import { useState } from "react";
 import { IconTrash } from "@tabler/icons-react";
 import CreateAlbum from "./components/create-album";
 import ConfirmData from "../../components/confirm-button";
+import EditAlbum from "./components/editl-album";
 
 const Album = () => {
   const [value, setValue] = useDebouncedState("", 500);
@@ -77,6 +78,7 @@ const Album = () => {
                       >
                         <IconTrash size={20} />
                       </ActionIcon>
+                      <EditAlbum id={id} />
                     </Flex>
                   </Box>
                 );

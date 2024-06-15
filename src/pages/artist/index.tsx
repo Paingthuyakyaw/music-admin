@@ -9,6 +9,7 @@ import { IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 import ConfirmData from "../../components/confirm-button";
 import { useDeleteArtist } from "../../store/server/artist/mutation";
+import EditArtist from "./components/udate-artist";
 
 const Artist = () => {
   const [value, setValue] = useDebouncedState("", 500);
@@ -68,6 +69,7 @@ const Artist = () => {
                       >
                         <IconTrash size={20} />
                       </ActionIcon>
+                      <EditArtist id={data.id} />
                     </Flex>
                   </Box>
                 );
